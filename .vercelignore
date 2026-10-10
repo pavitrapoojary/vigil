@@ -1,0 +1,11 @@
+# Python & ML offline training files
+ml/
+*.py
+*.csv
+
+# Documentation & screenshots
+docs/
+
+# Local environment & dev files
+dev.js
+.env*

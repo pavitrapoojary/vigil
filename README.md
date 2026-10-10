@@ -87,7 +87,7 @@ Do not send real patient-identifiable data through a consumer API key. In produc
 ## Retrain
 
 ```bash
-pip install -r requirements.txt
+pip install -r ml/requirements.txt
 python ml/train.py --data path/to/2025VAERSDATA.csv --symptoms path/to/2025VAERSSYMPTOMS.csv --out .
 ```
 
