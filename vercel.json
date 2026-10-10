@@ -1,0 +1,1 @@
+{ "functions": { "api/*.js": { "maxDuration": 30, "includeFiles": "api/_lib/model.json" } } }

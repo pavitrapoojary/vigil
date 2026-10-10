@@ -1,0 +1,395 @@
+{
+ "n_reports": 39544,
+ "split": {
+  "train": 27680,
+  "val": 5932,
+  "test": 5932
+ },
+ "label_counts": {
+  "P3": 36363,
+  "P2": 2116,
+  "P1": 1065
+ },
+ "test_label_counts": {
+  "P3": 5455,
+  "P2": 317,
+  "P1": 160
+ },
+ "C": 1,
+ "ms_per_case": 0.18144594360989488,
+ "report": {
+  "P1": {
+   "precision": 0.6540880503144654,
+   "recall": 0.65,
+   "f1-score": 0.6520376175548589,
+   "support": 160.0
+  },
+  "P2": {
+   "precision": 0.4429657794676806,
+   "recall": 0.7350157728706624,
+   "f1-score": 0.5527876631079478,
+   "support": 317.0
+  },
+  "P3": {
+   "precision": 0.9841814370116256,
+   "recall": 0.9466544454628781,
+   "f1-score": 0.9650532610726967,
+   "support": 5455.0
+  },
+  "macro avg": {
+   "precision": 0.6937450889312572,
+   "recall": 0.7772234061111801,
+   "f1-score": 0.7232928472451677,
+   "support": 5932.0
+  }
+ },
+ "confusion": [
+  [
+   104,
+   40,
+   16
+  ],
+  [
+   17,
+   233,
+   67
+  ],
+  [
+   38,
+   253,
+   5164
+  ]
+ ],
+ "serious": {
+  "recall": 0.8259958071278826,
+  "precision": 0.5751824817518248,
+  "p1_recall_as_p1_or_p2": 0.9
+ },
+ "model_plus_rules": {
+  "serious_recall": 0.8490566037735849,
+  "serious_precision": 0.39823008849557523,
+  "p1_recall": 0.68125
+ },
+ "by_age": [
+  {
+   "group": "0-17",
+   "n": 1327,
+   "n_serious": 62,
+   "serious_recall": 0.6774193548387096
+  },
+  {
+   "group": "18-49",
+   "n": 1009,
+   "n_serious": 105,
+   "serious_recall": 0.819047619047619
+  },
+  {
+   "group": "50-64",
+   "n": 932,
+   "n_serious": 100,
+   "serious_recall": 0.83
+  },
+  {
+   "group": "65+",
+   "n": 1286,
+   "n_serious": 129,
+   "serious_recall": 0.8217054263565892
+  },
+  {
+   "group": "Unknown",
+   "n": 1378,
+   "n_serious": 81,
+   "serious_recall": 0.9506172839506173
+  }
+ ],
+ "by_sex": [
+  {
+   "group": "Female",
+   "n": 3305,
+   "n_serious": 245,
+   "serious_recall": 0.8040816326530612
+  },
+  {
+   "group": "Male",
+   "n": 1867,
+   "n_serious": 204,
+   "serious_recall": 0.8333333333333334
+  },
+  {
+   "group": "Unknown",
+   "n": 760,
+   "n_serious": 28,
+   "serious_recall": 0.9642857142857143
+  }
+ ],
+ "curve": [
+  {
+   "tau": 0.3,
+   "auto_pct": 1.0,
+   "manual_pct": 0.0,
+   "serious_missed": 83,
+   "serious_total": 477,
+   "serious_missed_pct": 0.1740041928721174,
+   "p1_under_triaged": 56,
+   "p1_total": 160,
+   "auto_accuracy": 0.9273432231962239
+  },
+  {
+   "tau": 0.35,
+   "auto_pct": 0.9994942683749157,
+   "manual_pct": 0.0005057316250842714,
+   "serious_missed": 83,
+   "serious_total": 477,
+   "serious_missed_pct": 0.1740041928721174,
+   "p1_under_triaged": 56,
+   "p1_total": 160,
+   "auto_accuracy": 0.927475122280317
+  },
+  {
+   "tau": 0.4,
+   "auto_pct": 0.9967970330411329,
+   "manual_pct": 0.003202966958867126,
+   "serious_missed": 81,
+   "serious_total": 477,
+   "serious_missed_pct": 0.16981132075471697,
+   "p1_under_triaged": 55,
+   "p1_total": 160,
+   "auto_accuracy": 0.928462709284627
+  },
+  {
+   "tau": 0.45,
+   "auto_pct": 0.9873567093728928,
+   "manual_pct": 0.012643290627107229,
+   "serious_missed": 74,
+   "serious_total": 477,
+   "serious_missed_pct": 0.15513626834381553,
+   "p1_under_triaged": 51,
+   "p1_total": 160,
+   "auto_accuracy": 0.933583745945023
+  },
+  {
+   "tau": 0.5,
+   "auto_pct": 0.9669588671611599,
+   "manual_pct": 0.03304113283884014,
+   "serious_missed": 66,
+   "serious_total": 477,
+   "serious_missed_pct": 0.13836477987421383,
+   "p1_under_triaged": 47,
+   "p1_total": 160,
+   "auto_accuracy": 0.9408995815899581
+  },
+  {
+   "tau": 0.55,
+   "auto_pct": 0.9442009440323669,
+   "manual_pct": 0.05579905596763313,
+   "serious_missed": 53,
+   "serious_total": 477,
+   "serious_missed_pct": 0.1111111111111111,
+   "p1_under_triaged": 41,
+   "p1_total": 160,
+   "auto_accuracy": 0.9514372433494019
+  },
+  {
+   "tau": 0.6,
+   "auto_pct": 0.9123398516520567,
+   "manual_pct": 0.08766014834794333,
+   "serious_missed": 40,
+   "serious_total": 477,
+   "serious_missed_pct": 0.08385744234800839,
+   "p1_under_triaged": 32,
+   "p1_total": 160,
+   "auto_accuracy": 0.9617516629711752
+  },
+  {
+   "tau": 0.65,
+   "auto_pct": 0.8806473364801078,
+   "manual_pct": 0.11935266351989215,
+   "serious_missed": 34,
+   "serious_total": 477,
+   "serious_missed_pct": 0.07127882599580712,
+   "p1_under_triaged": 28,
+   "p1_total": 160,
+   "auto_accuracy": 0.9691807044410413
+  },
+  {
+   "tau": 0.7,
+   "auto_pct": 0.8472690492245448,
+   "manual_pct": 0.15273095077545518,
+   "serious_missed": 26,
+   "serious_total": 477,
+   "serious_missed_pct": 0.05450733752620545,
+   "p1_under_triaged": 25,
+   "p1_total": 160,
+   "auto_accuracy": 0.9761241543971348
+  },
+  {
+   "tau": 0.75,
+   "auto_pct": 0.806136210384356,
+   "manual_pct": 0.193863789615644,
+   "serious_missed": 21,
+   "serious_total": 477,
+   "serious_missed_pct": 0.0440251572327044,
+   "p1_under_triaged": 20,
+   "p1_total": 160,
+   "auto_accuracy": 0.9809703053115851
+  },
+  {
+   "tau": 0.8,
+   "auto_pct": 0.7528658125421444,
+   "manual_pct": 0.24713418745785565,
+   "serious_missed": 11,
+   "serious_total": 477,
+   "serious_missed_pct": 0.023060796645702306,
+   "p1_under_triaged": 10,
+   "p1_total": 160,
+   "auto_accuracy": 0.9867890729959695
+  },
+  {
+   "tau": 0.85,
+   "auto_pct": 0.6842548887390425,
+   "manual_pct": 0.3157451112609575,
+   "serious_missed": 9,
+   "serious_total": 477,
+   "serious_missed_pct": 0.018867924528301886,
+   "p1_under_triaged": 3,
+   "p1_total": 160,
+   "auto_accuracy": 0.9906380881990638
+  },
+  {
+   "tau": 0.9,
+   "auto_pct": 0.5743425488873904,
+   "manual_pct": 0.42565745111260955,
+   "serious_missed": 5,
+   "serious_total": 477,
+   "serious_missed_pct": 0.010482180293501049,
+   "p1_under_triaged": 1,
+   "p1_total": 160,
+   "auto_accuracy": 0.9950102729674201
+  },
+  {
+   "tau": 0.95,
+   "auto_pct": 0.3905933917734322,
+   "manual_pct": 0.6094066082265678,
+   "serious_missed": 0,
+   "serious_total": 477,
+   "serious_missed_pct": 0.0,
+   "p1_under_triaged": 1,
+   "p1_total": 160,
+   "auto_accuracy": 0.998705222270177
+  }
+ ],
+ "default_tau": 0.75,
+ "aesi_validation": [
+  {
+   "id": "anaphylaxis",
+   "label": "Possible anaphylaxis",
+   "coded_pt_cases": 130,
+   "rule_hits": 547,
+   "recall_vs_coded": 0.9692307692307692,
+   "precision_vs_coded": 0.2303473491773309
+  },
+  {
+   "id": "myocarditis",
+   "label": "Possible myocarditis / pericarditis",
+   "coded_pt_cases": 249,
+   "rule_hits": 177,
+   "recall_vs_coded": 0.5903614457831325,
+   "precision_vs_coded": 0.8305084745762712
+  },
+  {
+   "id": "gbs",
+   "label": "Possible Guillain-Barr\u00e9 syndrome",
+   "coded_pt_cases": 144,
+   "rule_hits": 163,
+   "recall_vs_coded": 0.8541666666666666,
+   "precision_vs_coded": 0.754601226993865
+  },
+  {
+   "id": "tts",
+   "label": "Possible thrombosis with thrombocytopenia",
+   "coded_pt_cases": 142,
+   "rule_hits": 136,
+   "recall_vs_coded": 0.7605633802816901,
+   "precision_vs_coded": 0.7941176470588235
+  },
+  {
+   "id": "neuro",
+   "label": "Possible serious neurological event",
+   "coded_pt_cases": 627,
+   "rule_hits": 830,
+   "recall_vs_coded": 0.9362041467304625,
+   "precision_vs_coded": 0.7072289156626506
+  }
+ ],
+ "errors": {
+  "missed_serious": 83,
+  "false_alarms": 291,
+  "examples_missed": [
+   {
+    "id": 2851246,
+    "true": "P2",
+    "pred": "P3",
+    "text": "Systemic: Bell's Palsy-Medium"
+   },
+   {
+    "id": 2871911,
+    "true": "P2",
+    "pred": "P3",
+    "text": "Immediate severe pain throughout injection site, radiating around my shoulder blade and then down to my elbow. I immediately yelled out with pain. It was hot, stinging/burning sensation and within 30 minutes I was not able to move my arm in the slightest degre"
+   },
+   {
+    "id": 2854427,
+    "true": "P2",
+    "pred": "P3",
+    "text": "Chest pain moving to left Arm"
+   },
+   {
+    "id": 2875505,
+    "true": "P1",
+    "pred": "P3",
+    "text": "tingling of mouth, gums, tongue. numbness of lip and throat. Difficulty speaking and swollowing. Pepcid and solumedrol IV. Nebulizer treatment. EPI pen, benadryl IV. PO benadryl every 6 hours the next day for throat and neck tightness."
+   },
+   {
+    "id": 2860596,
+    "true": "P2",
+    "pred": "P3",
+    "text": "After vaccination, mother came out of exam room, panicked, stating that she needed someone immediately as patient had passed out and hit his head.  Dr. went into the room to find patient laying on the floor in a prone position.  He was able to arouse patient w"
+   },
+   {
+    "id": 2827659,
+    "true": "P2",
+    "pred": "P3",
+    "text": "Steroids. Pain meds. Bacitracin cream. Triamcinolone cream"
+   }
+  ],
+  "examples_false_alarm": [
+   {
+    "id": 2876259,
+    "true": "P3",
+    "pred": "P2",
+    "text": "Patient states developed severe hives 5 days after the vaccine and had to go to her doctor to obtain a steroid prescription."
+   },
+   {
+    "id": 2827514,
+    "true": "P3",
+    "pred": "P2",
+    "text": "Brain \"fog\",  dizziness,  hyper somnia,  chronic fatigue"
+   },
+   {
+    "id": 2870553,
+    "true": "P3",
+    "pred": "P2",
+    "text": "Patient received Spikevax on 10/31/2025 and became very ill on 11/01/2025. She reports having a fever, weak, stomach pain, and almost passed out twice. She was see at the local hospital and fluids were administered and tests were ran. She is feeling back to no"
+   },
+   {
+    "id": 2836830,
+    "true": "P3",
+    "pred": "P2",
+    "text": "Pt developed L ankle swelling/inflammation 6/4/2021, has intermittently flared up since without clear cause or known trigger.  Pt subsequently diagnosed with metastatic prostate cancer on 2/7/2024 in his spine (no evidence of disease in leg or ankle)."
+   }
+  ],
+  "median_len_missed": 177,
+  "median_len_all": 415
+ },
+ "gemini": null
+}

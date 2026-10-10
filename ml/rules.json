@@ -1,0 +1,12 @@
+{
+ "aesi": [
+  {"id":"anaphylaxis","label":"Possible anaphylaxis","min_priority":"P2","pattern":"anaphyla\\w*|(?:throat|tongue|lip|facial|face) (?:swelling|swollen|closing)|angioedema|epinephrine|epipen|bronchospasm|airway (?:swelling|compromise)"},
+  {"id":"myocarditis","label":"Possible myocarditis / pericarditis","min_priority":"P2","pattern":"myocarditis|pericarditis|myopericarditis|troponin (?:elevat\\w*|increas\\w*|positive|high)|elevated troponin"},
+  {"id":"gbs","label":"Possible Guillain-Barré syndrome","min_priority":"P2","pattern":"guillain|gbs\\b|ascending (?:paralysis|weakness)|acute flaccid"},
+  {"id":"tts","label":"Possible thrombosis with thrombocytopenia","min_priority":"P2","pattern":"thrombocytopeni\\w*|cerebral venous|sinus thrombosis|pulmonary embol\\w*|deep vein thrombosis|\\bdvt\\b"},
+  {"id":"neuro","label":"Possible serious neurological event","min_priority":"P2","pattern":"transverse myelitis|encephalitis|encephalopathy|\\badem\\b|stroke|cerebrovascular|seizure|convuls\\w*|status epilepticus"},
+  {"id":"cardiac_arrest","label":"Cardiac / respiratory arrest","min_priority":"P1","pattern":"cardiac arrest|respiratory arrest|resuscitat\\w*|\\bcpr\\b|intubat\\w*|ventilator|code blue|\\bicu\\b|intensive care|anaphylactic shock"},
+  {"id":"death","label":"Death reported","min_priority":"P1","pattern":"\\bdied\\b|\\bdeath\\b|\\bdeceased\\b|\\bfatal\\w*|passed away|\\bautopsy\\b|\\bexpired\\b"}
+ ],
+ "negations": ["no","not","denies","denied","without","negative","ruled","neither","never","absence","free"]
+}

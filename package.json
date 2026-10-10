@@ -1,0 +1,2 @@
+{ "name": "vigil", "version": "1.0.0", "private": true, "description": "AI-assisted seriousness triage for adverse event reports (prototype)",
+  "scripts": { "dev": "node dev.js", "start": "node dev.js" }, "engines": { "node": ">=18" } }

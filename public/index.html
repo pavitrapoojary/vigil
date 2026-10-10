@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vigil · AI-assisted adverse event triage</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+<style>
+:root{--bg:#f6f8fa;--card:#fff;--ink:#1f2933;--mute:#617080;--line:#e2e8ee;--brand:#2a6f97;--brand-d:#1d5578;--brand-l:#e8f1f7;
+--p1:#b4412f;--p1l:#fbeae7;--p2:#b7791f;--p2l:#fdf3e0;--p3:#2f7d5b;--p3l:#e6f4ec;--man:#5b5fa8;--manl:#ececf8}
+*{box-sizing:border-box}body{margin:0;font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--card);border-bottom:1px solid var(--line)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;flex-wrap:wrap}
+.logo{font-size:22px;font-weight:700;letter-spacing:-.3px}.logo span{color:var(--brand)}
+.tag{color:var(--mute);font-size:13px}
+nav{display:flex;gap:4px;flex-wrap:wrap}nav button{border:0;background:none;padding:10px 14px;font:inherit;color:var(--mute);cursor:pointer;border-bottom:3px solid transparent;font-weight:600}
+nav button.on{color:var(--brand);border-color:var(--brand)}
+.banner{background:var(--p2l);color:#7a5412;font-size:13px;padding:8px 0;border-bottom:1px solid #f0dfb8}
+main{padding:24px 0 60px}.tab{display:none}.tab.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:18px}
+h2{margin:0 0 4px;font-size:20px}h3{margin:0 0 8px;font-size:16px}.sub{color:var(--mute);margin:0 0 14px;font-size:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+textarea{width:100%;min-height:170px;padding:12px;border:1px solid var(--line);border-radius:8px;font:inherit;resize:vertical;background:#fcfdfe}
+textarea:focus,input:focus,select:focus{outline:2px solid var(--brand-l);border-color:var(--brand)}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:8px;padding:10px 18px;font:inherit;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--brand-d)}.btn.ghost{background:var(--brand-l);color:var(--brand-d)}.btn.ghost:hover{background:#d6e7f1}
+.btn:disabled{opacity:.55;cursor:wait}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700}
+.P1{background:var(--p1l);color:var(--p1)}.P2{background:var(--p2l);color:var(--p2)}.P3{background:var(--p3l);color:var(--p3)}.MAN{background:var(--manl);color:var(--man)}
+.big{font-size:34px;font-weight:800;line-height:1}.kv{display:grid;grid-template-columns:140px 1fr;gap:8px 12px;margin-top:12px}.kv b{color:var(--mute);font-weight:600}
+.chip{display:inline-block;background:var(--brand-l);color:var(--brand-d);border-radius:6px;padding:2px 8px;margin:2px 4px 2px 0;font-size:13px}
+.chip.aesi{background:var(--p1l);color:var(--p1)}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:3px 0 8px}.bar i{display:block;height:100%}
+ul.clean{margin:6px 0 0;padding-left:18px}ul.clean li{margin:3px 0}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line)}th{color:var(--mute);font-weight:600;font-size:13px}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.stat{background:var(--bg);border-radius:10px;padding:14px}.stat .v{font-size:26px;font-weight:800;color:var(--brand-d)}.stat .l{color:var(--mute);font-size:13px}
+.note{background:var(--brand-l);border-radius:8px;padding:10px 12px;font-size:13.5px;color:#26485f;margin-top:12px}
+.warn{background:var(--p2l);color:#7a5412}
+.flow{display:flex;gap:6px;flex-wrap:wrap;align-items:stretch;margin:8px 0}.step{flex:1 1 120px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+.step b{display:block;font-size:12px;color:var(--mute)}.step.ai{background:var(--brand-l);border-color:#bcd7e8}.step.hum{background:var(--manl);border-color:#d3d4ee}.step.old{background:#fdf3e0;border-color:#f0dfb8}
+.arrow{align-self:center;color:var(--mute)}
+label{font-size:13px;color:var(--mute);font-weight:600;display:block;margin-bottom:3px}input[type=number],select{padding:8px;border:1px solid var(--line);border-radius:8px;font:inherit;width:100%}
+input[type=range]{width:100%;accent-color:var(--brand)}
+.err{color:var(--p1);margin-top:8px}small.m{color:var(--mute)}
+.scroll{overflow-x:auto}
+footer{color:var(--mute);font-size:12.5px;text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="top"><div><div class="logo">🛡️ Vi<span>gil</span></div><div class="tag">AI-assisted seriousness triage for adverse event reports, with a human making the final call</div></div></div>
+  <nav id="nav"><button data-t="triage" class="on">Triage a report</button><button data-t="evidence">Evidence</button><button data-t="process">Process &amp; controls</button><button data-t="about">Caveats &amp; method</button></nav>
+</div></header>
+<div class="banner"><div class="wrap">Research prototype built on public VAERS data. Not validated, not for clinical or regulatory use. Do not paste real patient-identifiable information.</div></div>
+
+<main class="wrap">
+<!-- ============ TRIAGE ============ -->
+<section class="tab on" id="triage">
+  <div class="grid2">
+    <div class="card">
+      <h2>Incoming report</h2><p class="sub">Paste a case narrative or load an example. The outcome flags are never used, only the text.</p>
+      <textarea id="txt" placeholder="e.g. 62F, 2 days after dose, chest pain, troponin elevated, admitted for observation."></textarea>
+      <div class="row">
+        <button class="btn" id="go">Triage case</button>
+        <button class="btn ghost" id="rand">Load a real VAERS report</button>
+        <select id="ex" style="width:auto"><option value="">Examples…</option></select>
+      </div>
+      <div class="row" style="margin-top:16px">
+        <div style="flex:1;min-width:200px"><label>Auto-route confidence threshold: <span id="tauv"></span></label><input type="range" id="tau" min="0.4" max="0.95" step="0.05"></div>
+        <div style="flex:1;min-width:200px"><label style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="useg"> Ask Gemini for a second opinion</label><small class="m">Needs a server-side API key. Disagreement toward higher seriousness escalates to manual review.</small></div>
+      </div>
+      <div id="truth" class="note" style="display:none"></div>
+      <div id="err" class="err"></div>
+    </div>
+    <div class="card" id="out"><h2>Decision</h2><p class="sub">Result appears here: priority, confidence, reasons, queue.</p></div>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><div><h2>Audit trail</h2><p class="sub" style="margin:0">Every decision is logged. Here it is stored in your browser; a production build would write to an immutable store.</p></div>
+    <div class="row" style="margin:0"><button class="btn ghost" id="csv">Export CSV</button><button class="btn ghost" id="clr">Clear</button></div></div>
+    <div class="scroll"><table id="log"><thead><tr><th>Time</th><th>Case hash</th><th>Priority</th><th class="n">Conf.</th><th>Routing</th><th>Queue</th><th>Reviewer action</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</section>
+
+<!-- ============ EVIDENCE ============ -->
+<section class="tab" id="evidence"><div id="evi"><div class="card">Loading…</div></div></section>
+
+<!-- ============ PROCESS ============ -->
+<section class="tab" id="process">
+  <div class="card"><h2>As-is vs to-be process</h2><p class="sub">Where the prototype sits in the individual case safety report (ICSR) lifecycle.</p>
+    <h3>As-is</h3>
+    <div class="flow"><div class="step old"><b>1</b>Intake</div><span class="arrow">→</span><div class="step old"><b>2</b>Duplicate check</div><span class="arrow">→</span><div class="step old"><b>3</b>MedDRA coding</div><span class="arrow">→</span><div class="step old"><b>4</b>Seriousness assessment<br><small>every case read by a person</small></div><span class="arrow">→</span><div class="step old"><b>5</b>Medical review</div><span class="arrow">→</span><div class="step old"><b>6</b>Submission</div></div>
+    <h3 style="margin-top:14px">To-be</h3>
+    <div class="flow"><div class="step"><b>1</b>Intake</div><span class="arrow">→</span><div class="step"><b>2</b>Duplicate check</div><span class="arrow">→</span><div class="step"><b>3</b>MedDRA coding</div><span class="arrow">→</span><div class="step ai"><b>4 · AI</b>Model + AESI rules score seriousness and confidence</div><span class="arrow">→</span><div class="step hum"><b>4b · Human</b>Low confidence, rule hits or model disagreement: manual triage</div><span class="arrow">→</span><div class="step hum"><b>5 · Human</b>Medical reviewer confirms every serious case</div><span class="arrow">→</span><div class="step"><b>6</b>Submission</div></div>
+    <div class="note">Only step 4 changes. Coding, medical judgement and submission stay with trained staff. The AI proposes an order of work; it never closes a case.</div>
+  </div>
+  <div class="card"><h2>Effort-saving estimate</h2><p class="sub">Assumption-based. Change the inputs; only the auto-routed share comes from measured test-set results.</p>
+    <div class="grid3">
+      <div><label>Cases per year</label><input type="number" id="e_n" value="40000"><small class="m">Example: ~40k VAERS reports in the 2025 file</small></div>
+      <div><label>Minutes to triage one case manually</label><input type="number" id="e_m" value="10"></div>
+      <div><label>Minutes to spot-check an auto-routed case</label><input type="number" id="e_s" value="2"></div>
+    </div>
+    <div class="row"><label style="margin:0">Threshold used</label><select id="e_tau" style="width:auto"></select></div>
+    <div class="grid3" style="margin-top:14px" id="eff"></div>
+    <div class="note warn">Hours saved = cases × auto-routed share × (manual minutes − spot-check minutes) ÷ 60. The minutes are assumptions, not measurements. Missed serious cases at this threshold are shown above so the saving is never read without its risk.</div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h2>Control design</h2>
+      <ul class="clean">
+        <li><b>Human in the loop:</b> every output is a recommendation. Serious cases and all rule hits are confirmed by a medical reviewer.</li>
+        <li><b>Safe-fail routing:</b> low confidence, rule hits, or a more-serious second opinion all send the case to manual review.</li>
+        <li><b>Validation (GxP):</b> intended-use statement, URS, risk assessment, frozen test set, pre-agreed acceptance criteria (for example serious-case recall), documented IQ/OQ/PQ-style evidence, change control on every retrain.</li>
+        <li><b>Audit trail:</b> input hash, model version, threshold, probabilities, rules fired, routing, reviewer action, timestamp (ALCOA+).</li>
+        <li><b>Drift monitoring:</b> monthly serious-share, confidence distribution, override rate and sampled QC re-review; retrain triggers defined in advance.</li>
+        <li><b>Data protection:</b> strip identifiers before any external LLM call; use a contracted enterprise endpoint in production.</li>
+      </ul></div>
+    <div class="card"><h2>Risks &amp; change management</h2>
+      <ul class="clean">
+        <li><b>Reviewer trust:</b> show reasons and flagged terms; publish error analysis; start in shadow mode, with AI output hidden, and compare.</li>
+        <li><b>Automation bias:</b> reviewers may rubber-stamp. Mitigate with random blind QC samples and override-rate tracking.</li>
+        <li><b>Regulator expectations:</b> clock and quality rules still apply; document the model as a decision-support tool under the PV quality system.</li>
+        <li><b>Accountability:</b> the Qualified Person for Pharmacovigilance and the Head of Safety stay accountable; the model owner is accountable for performance and monitoring.</li>
+        <li><b>Rollout:</b> shadow mode, then assisted triage for non-serious auto-routing only, then expand if metrics hold.</li>
+      </ul></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="tab" id="about">
+  <div class="card"><h2>Method</h2>
+    <ul class="clean">
+      <li><b>Data:</b> VAERS 2025 DATA and SYMPTOMS files, joined on VAERS_ID. Repeated IDs (follow-up versions) merged: flags OR-ed, longest narrative kept.</li>
+      <li><b>Labels:</b> P1 = died or life-threatening; P2 = hospitalised or disabled; P3 = everything else. Taken from the reporter's own flags.</li>
+      <li><b>No leakage:</b> the flags and structured fields are removed from model input. Only the narrative text is used.</li>
+      <li><b>Baseline model:</b> TF-IDF (1-2 grams) + class-weighted logistic regression, 70/15/15 stratified split; C chosen on validation for serious-case recall; reported on the untouched test set.</li>
+      <li><b>Rules layer:</b> regex triggers for events of special interest and death/arrest, with a simple negation check. Rules can only raise priority, never lower it.</li>
+      <li><b>Second opinion:</b> Gemini few-shot prompt, advisory only. Measured with <code>ml/eval_gemini.py</code>.</li>
+    </ul></div>
+  <div class="card"><h2>Honest caveats</h2>
+    <ul class="clean">
+      <li>VAERS is a spontaneous reporting system: noisy, unverified, with duplicates.</li>
+      <li>Labels reflect what the reporter ticked, not clinical adjudication. P2 in particular is inconsistent: many narratives of hospital stays have no flag.</li>
+      <li>Narratives often state the outcome ("died", "hospitalised"), so part of the performance is reading obvious words, not clinical inference.</li>
+      <li>Random split, one year of data, one vaccine-focused system. No external validation and no temporal hold-out.</li>
+      <li>Rule negation handling is crude: family history ("father died") can fire the death rule. That is why rule hits go to a human.</li>
+      <li>This is a prototype, not a validated system.</li>
+    </ul></div>
+</section>
+</main>
+<footer>Vigil · prototype · data: CDC/FDA VAERS (public) · decisions are recommendations for a human reviewer</footer>
+
+<script>
+const $=s=>document.querySelector(s), pct=x=>(x*100).toFixed(1)+"%", COL={P1:"#b4412f",P2:"#b7791f",P3:"#2f7d5b"};
+let METRICS=null,SAMPLES=[],LOG=JSON.parse(localStorage.getItem("vigil_log")||localStorage.getItem("cc_log")||"[]"),LAST=null;
+const EXAMPLES={
+ "Possible myocarditis":"62F, 2 days after dose, chest pain, troponin elevated, admitted for observation.",
+ "Mild, self-limiting":"Sore arm and mild fever for one day after the shot. Took paracetamol, resolved the next morning.",
+ "Anaphylaxis, hospitalised":"15 minutes after vaccination patient developed hives, throat tightness and difficulty breathing. Epinephrine given by clinic staff, transported by ambulance and admitted overnight.",
+ "Fatal outcome":"Elderly patient found unresponsive 3 days after vaccination. Family reports death at home. No autopsy performed.",
+ "Negated mention (rule should not fire)":"Patient had a sore arm. No anaphylaxis, no rash, no breathing difficulty. Went home the same day.",
+ "Ambiguous":"Patient felt dizzy and unwell after the vaccine, was seen by a doctor and told to rest."};
+for(const k in EXAMPLES){const o=document.createElement("option");o.textContent=k;o.value=k;$("#ex").appendChild(o)}
+$("#ex").onchange=e=>{if(e.target.value){$("#txt").value=EXAMPLES[e.target.value];$("#truth").style.display="none";e.target.value=""}};
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button,.tab").forEach(x=>x.classList.remove("on"));b.classList.add("on");$("#"+b.dataset.t).classList.add("on")});
+$("#tau").oninput=()=>$("#tauv").textContent=(+$("#tau").value).toFixed(2);
+$("#rand").onclick=()=>{if(!SAMPLES.length)return;const s=SAMPLES[Math.floor(Math.random()*SAMPLES.length)];$("#txt").value=s.text;
+ $("#truth").style.display="block";$("#truth").innerHTML=`VAERS #${s.id} · ${s.age??"age unknown"} · ${s.sex}. Reporter-flag label (ground truth for this demo): <span class="pill ${s.reporter_label}">${s.reporter_label}</span>`};
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+async function post(u,b){const r=await fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)});const j=await r.json();if(!r.ok)throw new Error(j.error||"Request failed");return j}
+$("#go").onclick=async()=>{
+ const text=$("#txt").value.trim(),btn=$("#go");$("#err").textContent="";if(text.length<10){$("#err").textContent="Enter a report narrative first.";return}
+ btn.disabled=true;btn.textContent="Working…";let g=null,gerr=null;
+ try{ if($("#useg").checked){try{g=await post("/api/gemini",{text})}catch(e){gerr=e.message}}
+  const d=await post("/api/triage",{text,tau:+$("#tau").value,gemini:g});LAST=d;render(d,g,gerr);addLog(d);
+ }catch(e){$("#err").textContent=e.message}finally{btn.disabled=false;btn.textContent="Triage case"}};
+function render(d,g,gerr){
+ const man=d.routing==="MANUAL_REVIEW",probs=Object.entries(d.probabilities).map(([k,v])=>`<div><small>${k} · ${pct(v)}</small><div class="bar"><i style="width:${v*100}%;background:${COL[k]}"></i></div></div>`).join("");
+ const gem=g?`<div class="note"><b>Gemini second opinion:</b> <span class="pill ${g.priority}">${g.priority}</span> (conf ${(+g.confidence).toFixed(2)}) · ${esc(g.rationale||"")}<br><small>${esc(g.model)} · ${g.latency_ms} ms · advisory only</small></div>`:(gerr?`<div class="note warn">Gemini unavailable: ${esc(gerr)}</div>`:"");
+ $("#out").innerHTML=`<h2>Decision</h2><p class="sub">Recommendation for the human reviewer. Final decision stays with a person.</p>
+ <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><div class="big" style="color:${COL[d.priority]}">${d.priority}</div><div><span class="pill ${d.priority}">${{P1:"Died / life-threatening",P2:"Hospitalised / disabling",P3:"Non-serious"}[d.priority]}</span><div class="tag">confidence ${d.confidence.toFixed(2)} · threshold ${d.tau.toFixed(2)}</div></div></div>
+ <div style="margin-top:12px">${probs}</div>
+ <div class="kv"><b>Route to</b><div><span class="pill ${man?"MAN":d.priority}">${man?"MANUAL REVIEW":"AUTO-ROUTED"}</span> ${esc(d.queue)}</div>
+ <b>Special interest</b><div>${d.special_interest.length?d.special_interest.map(x=>`<span class="chip aesi">${esc(x)}</span>`).join(""):"<small class='m'>none flagged</small>"}</div>
+ <b>Flagged terms</b><div>${d.flagged_terms.map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>
+ <b>Why</b><div><ul class="clean" style="margin:0">${d.reasons.map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div></div>${gem}
+ <div class="row"><button class="btn" onclick="act('Confirmed')">Confirm</button><button class="btn ghost" onclick="act('Overridden')">Override…</button><small class="m">model ${esc(d.model_version)} · ${d.audit.latency_ms} ms</small></div>`}
+function addLog(d){LOG.unshift({t:d.audit.timestamp,h:d.audit.case_hash,p:d.priority,c:d.confidence,r:d.routing,q:d.queue,a:"Pending",tau:d.tau,v:d.model_version});LOG=LOG.slice(0,200);save()}
+window.act=a=>{if(!LOG.length)return;let note="";if(a==="Overridden"){const v=prompt("Corrected priority (P1, P2 or P3):");if(!["P1","P2","P3"].includes((v||"").toUpperCase()))return;a="Overridden → "+v.toUpperCase()}LOG[0].a=a;save()};
+function save(){localStorage.setItem("vigil_log",JSON.stringify(LOG));drawLog()}
+function drawLog(){$("#log tbody").innerHTML=LOG.length?LOG.map(l=>`<tr><td>${new Date(l.t).toLocaleString()}</td><td><code>${l.h}</code></td><td><span class="pill ${l.p}">${l.p}</span></td><td class="n">${l.c.toFixed(2)}</td><td>${l.r==="MANUAL_REVIEW"?"Manual":"Auto"}</td><td>${esc(l.q)}</td><td>${esc(l.a)}</td></tr>`).join(""):`<tr><td colspan="7"><small class="m">No decisions yet.</small></td></tr>`}
+$("#clr").onclick=()=>{LOG=[];save()};
+$("#csv").onclick=()=>{const rows=[["time","case_hash","priority","confidence","routing","queue","reviewer_action","threshold","model_version"],...LOG.map(l=>[l.t,l.h,l.p,l.c,l.r,l.q,l.a,l.tau,l.v])];
+ const b=new Blob([rows.map(r=>r.map(x=>`"${String(x).replace(/"/g,'""')}"`).join(",")).join("\n")],{type:"text/csv"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="vigil_audit_log.csv";a.click()};
+
+/* ---------- Evidence tab ---------- */
+function curveSvg(c){const W=520,H=240,m={l:44,r:12,t:12,b:34},x=t=>m.l+(t-0.3)/0.65*(W-m.l-m.r),y=v=>H-m.b-v*(H-m.t-m.b);
+ const line=(k,col,sc=1)=>`<polyline fill="none" stroke="${col}" stroke-width="2.5" points="${c.map(p=>x(p.tau)+","+y(Math.min(1,p[k]*sc))).join(" ")}"/>`;
+ let g="";for(let i=0;i<=5;i++){g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(i/5)}" y2="${y(i/5)}" stroke="#e2e8ee"/><text x="${m.l-6}" y="${y(i/5)+4}" font-size="11" text-anchor="end" fill="#617080">${i*20}%</text>`}
+ for(const t of [0.3,0.5,0.7,0.9])g+=`<text x="${x(t)}" y="${H-12}" font-size="11" text-anchor="middle" fill="#617080">${t}</text>`;
+ const d=c.find(p=>p.tau===METRICS.default_tau);
+ return `<svg viewBox="0 0 ${W} ${H}" width="100%">${g}${line("auto_pct","#2a6f97")}${line("serious_missed_pct","#b4412f")}
+ <line x1="${x(d.tau)}" x2="${x(d.tau)}" y1="${m.t}" y2="${H-m.b}" stroke="#617080" stroke-dasharray="4 4"/>
+ <text x="${W/2}" y="${H}" font-size="11" text-anchor="middle" fill="#617080">confidence threshold</text></svg>
+ <div class="row" style="margin:0"><span class="chip">━ share auto-routed (workload saved)</span><span class="chip aesi">━ serious cases auto-routed as non-serious</span><small class="m">dashed = default threshold</small></div>`}
+function buildEvidence(){const m=METRICS,r=m.report,cm=m.confusion,C=["P1","P2","P3"],dd=m.curve.find(p=>p.tau===m.default_tau);
+ const rows=["P1","P2","P3"].map(k=>`<tr><td><span class="pill ${k}">${k}</span></td><td class="n">${pct(r[k].precision)}</td><td class="n">${pct(r[k].recall)}</td><td class="n">${pct(r[k]["f1-score"])}</td><td class="n">${r[k].support}</td></tr>`).join("");
+ const conf=cm.map((row,i)=>{const t=row.reduce((a,b)=>a+b,0);return `<tr><th>${C[i]}</th>${row.map((v,j)=>`<td class="n" style="background:rgba(42,111,151,${(v/t*.75).toFixed(2)});color:${v/t>.5?"#fff":"inherit"}">${v}</td>`).join("")}</tr>`}).join("");
+ const grp=a=>a.map(g=>`<tr><td>${g.group}</td><td class="n">${g.n}</td><td class="n">${g.n_serious}</td><td class="n">${g.serious_recall==null?"–":pct(g.serious_recall)}</td></tr>`).join("");
+ const aesi=m.aesi_validation.map(a=>`<tr><td>${a.label}</td><td class="n">${a.coded_pt_cases}</td><td class="n">${a.rule_hits}</td><td class="n">${pct(a.recall_vs_coded)}</td><td class="n">${pct(a.precision_vs_coded)}</td></tr>`).join("");
+ const ex=m.errors.examples_missed.slice(0,4).map(e=>`<li><span class="pill ${e.true}">${e.true}</span> predicted <span class="pill ${e.pred}">${e.pred}</span> · <small>${esc(e.text)}…</small></li>`).join("");
+ const g=m.gemini;const gcard=g?`<table><thead><tr><th></th><th class="n">Serious recall</th><th class="n">Serious precision</th><th class="n">Accuracy</th><th class="n">Seconds / case</th></tr></thead><tbody>
+  <tr><td>Baseline (same ${g.n} cases)</td><td class="n">${pct(g.baseline_serious_recall_same_sample)}</td><td class="n">${pct(g.baseline_serious_precision_same_sample)}</td><td class="n">${pct(g.baseline_accuracy)}</td><td class="n">${(m.ms_per_case/1000).toFixed(4)}</td></tr>
+  <tr><td>${esc(g.model)} few-shot</td><td class="n">${pct(g.gemini_serious_recall)}</td><td class="n">${pct(g.gemini_serious_precision)}</td><td class="n">${pct(g.gemini_accuracy)}</td><td class="n">${g.gemini_sec_per_case.toFixed(2)}</td></tr></tbody></table><div class="note">${esc(g.note)}</div>`
+  :`<div class="note warn">Not yet measured. Run <code>python ml/eval_gemini.py --data &lt;VAERSDATA.csv&gt; --n 150</code> with your API key; results appear here automatically. Expect an LLM to cost more and run roughly 1-3 s per case versus under 1 ms for the baseline.</div>`;
+ $("#evi").innerHTML=`
+ <div class="card"><h2>Headline results (held-out test set, n=${m.split.test.toLocaleString()})</h2><p class="sub">Trained on ${m.split.train.toLocaleString()} reports; ${m.n_reports.toLocaleString()} in total. Serious = P1 or P2. Focus metric: recall on serious cases.</p>
+  <div class="grid3"><div class="stat"><div class="v">${pct(m.serious.recall)}</div><div class="l">Serious-case recall (model alone)</div></div>
+  <div class="stat"><div class="v">${pct(m.model_plus_rules.serious_recall)}</div><div class="l">Serious-case recall (model + rules)</div></div>
+  <div class="stat"><div class="v">${pct(m.serious.precision)}</div><div class="l">Serious-case precision (model alone)</div></div></div>
+  <div class="note">The model deliberately over-flags: class weighting trades precision for recall. Precision for P2 is about ${pct(r.P2.precision)}, so reviewers will see false alarms. That is the intended trade for a safety process.</div></div>
+ <div class="grid2"><div class="card"><h3>Per-class performance</h3><table><thead><tr><th>Class</th><th class="n">Precision</th><th class="n">Recall</th><th class="n">F1</th><th class="n">n</th></tr></thead><tbody>${rows}</tbody></table></div>
+ <div class="card"><h3>Confusion matrix</h3><p class="sub" style="margin-bottom:6px">Rows = reporter-flag label, columns = prediction</p><table><thead><tr><th></th><th class="n">P1</th><th class="n">P2</th><th class="n">P3</th></tr></thead><tbody>${conf}</tbody></table></div></div>
+ <div class="card"><h3>Confidence threshold: review workload vs missed serious cases</h3><p class="sub">Policy: auto-route when confidence ≥ threshold, otherwise send to manual review. At the default ${m.default_tau.toFixed(2)}: ${pct(dd.auto_pct)} auto-routed, ${pct(dd.manual_pct)} to manual review, ${pct(dd.serious_missed_pct)} of serious cases (${dd.serious_missed} of ${dd.serious_total}) auto-routed as non-serious. Default = highest auto-routing keeping that miss rate ≤ 5%.</p>${curveSvg(m.curve)}</div>
+ <div class="grid2"><div class="card"><h3>By age group (serious-case recall)</h3><table><thead><tr><th>Group</th><th class="n">Cases</th><th class="n">Serious</th><th class="n">Recall</th></tr></thead><tbody>${grp(m.by_age)}</tbody></table><div class="note">Paediatric (0-17) recall is lowest; small groups mean wide uncertainty. Monitor before any rollout.</div></div>
+ <div class="card"><h3>By sex (serious-case recall)</h3><table><thead><tr><th>Group</th><th class="n">Cases</th><th class="n">Serious</th><th class="n">Recall</th></tr></thead><tbody>${grp(m.by_sex)}</tbody></table></div></div>
+ <div class="card"><h3>What the model gets wrong</h3><p class="sub">${m.errors.missed_serious} serious cases predicted P3 and ${m.errors.false_alarms} non-serious cases flagged serious. Missed cases often have little outcome language, e.g.:</p><ul class="clean">${ex}</ul>
+  <div class="note">Typical failure modes: narratives that describe symptoms but not the outcome, boilerplate-heavy manufacturer reports, and reporter flags that disagree with the text. Some "errors" are label noise, not model faults.</div></div>
+ <div class="card"><h3>Special-interest rules checked against coded MedDRA terms</h3><p class="sub">Rules run on narrative text; "truth" is whether the SYMPTOMS file lists a matching coded term. The anaphylaxis rule is deliberately broad (epinephrine is also used for non-anaphylactic reactions), trading precision for recall.</p>
+  <div class="scroll"><table><thead><tr><th>Event</th><th class="n">Coded cases</th><th class="n">Rule hits</th><th class="n">Recall</th><th class="n">Precision</th></tr></thead><tbody>${aesi}</tbody></table></div></div>
+ <div class="card"><h3>Baseline vs LLM (Gemini)</h3>${gcard}</div>`}
+function buildEffort(){const m=METRICS,sel=$("#e_tau");m.curve.filter(c=>c.tau>=.5).forEach(c=>{const o=document.createElement("option");o.value=c.tau;o.textContent=c.tau.toFixed(2)+(c.tau===m.default_tau?" (default)":"");sel.appendChild(o)});sel.value=m.default_tau;
+ const f=()=>{const c=m.curve.find(p=>p.tau==sel.value),n=+$("#e_n").value,mm=+$("#e_m").value,s=+$("#e_s").value,hrs=n*c.auto_pct*(mm-s)/60,base=n*mm/60;
+  $("#eff").innerHTML=`<div class="stat"><div class="v">${pct(c.auto_pct)}</div><div class="l">auto-routed (measured)</div></div><div class="stat"><div class="v">${Math.round(hrs).toLocaleString()} h</div><div class="l">saved per year (assumption-based) of ${Math.round(base).toLocaleString()} h baseline</div></div><div class="stat"><div class="v" style="color:var(--p1)">${pct(c.serious_missed_pct)}</div><div class="l">serious cases auto-routed as non-serious (measured)</div></div>`};
+ ["#e_n","#e_m","#e_s","#e_tau"].forEach(i=>$(i).oninput=f);f()}
+(async()=>{drawLog();try{[METRICS,SAMPLES]=await Promise.all([fetch("/metrics.json").then(r=>r.json()),fetch("/samples.json").then(r=>r.json())]);
+ $("#tau").value=METRICS.default_tau;$("#tauv").textContent=METRICS.default_tau.toFixed(2);buildEvidence();buildEffort()}catch(e){$("#evi").innerHTML='<div class="card">Could not load metrics.json</div>'}})();
+</script>
+</body>
+</html>
